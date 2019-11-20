@@ -1,0 +1,80 @@
+@media screen and (max-width: 1200px) {
+  .preview{
+    padding: 35px 0;
+  }
+}
+@media screen and (max-width: 1199px) {
+  .wrapper{
+    padding-right: 25px;
+    padding-left: 25px;
+  }
+  .section{
+    background-image: none;
+  }
+}
+@media screen and (max-width: 584px){
+  .title{
+    font-size: 28px;
+  }
+  .wrapper{
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+@media screen and (max-width: 568px) {
+  .nav-list__link{
+    font-size: 10px;
+  }
+  .title{
+    font-size: 20px;
+  }
+}
+@media screen and (max-width: 467px){
+  .title{
+    padding-bottom: 20px;
+  }
+}
+@media screen and (max-width: 449px){
+  .title{
+    padding-bottom: 20px;
+  }
+}
+@media screen and (max-width: 434px) {
+  .social{
+    padding-bottom: 20px;
+  }
+  .btn--link,
+  .card-front,
+  .card__text,
+  .card-place,
+  .aside__sentence,
+  .aside__suptext,
+  .content__word,
+  .content__label,
+  .content__button{
+    font-size: 12px;
+  }
+  .card-price{
+    font-size: 14px;
+  }
+  .title{
+    font-size: 20px;
+  }
+  .aside__subtext{
+    font-size: 10px;
+  }
+  .content__suptitle{
+    font-size: 20px;
+  }
+  .nav-list__item{
+    margin-left: 10px;
+  }
+  .nav-list__link{
+    font-size: 7px;
+  }
+}
+@media screen and (max-width: 318px) {
+  .title{
+    font-size: 16px;
+  }
+}
