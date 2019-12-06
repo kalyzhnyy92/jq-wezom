@@ -22,12 +22,59 @@ jQuery(($) => {
                     $email_input.addClass('invalid');
                 }
             } else {
-                showFields($name_input.val(), $email_input.val());
+                showFields([
+                    {
+                        title: 'Имя',
+                        value: $name_input.val(),
+                    },
+                    {
+                        title: 'Email',
+                        value: $email_input.val(),
+                    }
+                ]);
             }
 
         });
     }
+
+    //При клике на изображение показать галерею slick
+    $(document).ready(function () {
+        //при клике на ссылку в слайде запускаем галерею
+        $('.card__slider').each(function () {
+            const slider = $(this);
+            const gallery = slider.find('.card__fancybox');
+
+            slider.on('click', '.card__fancybox', function (e) {
+                e.preventDefault();
+                //узнаём индекс слайда без учёта клонов
+                var totalSlides = +$(this).parents('.slider').slick("getSlick").slideCount,
+                    dataIndex = +$(this).parents('.slide').data('slick-index'),
+                    trueIndex;
+                switch (true) {
+                    case (dataIndex < 0):
+                        trueIndex = totalSlides + dataIndex;
+                        break;
+                    case (dataIndex >= totalSlides):
+                        trueIndex = dataIndex % totalSlides;
+                        break;
+                    default:
+                        trueIndex = dataIndex;
+                }
+                //вызывается элемент галереи, соответствующий индексу слайда
+                $.fancybox.open(gallery, {}, trueIndex);
+                return false;
+            });
+
+            slider.slick();
+        })
+    });
 });
+
+const NO_NAME_ERROR = 'Введите имя';
+const NO_HYPHENS_ERROR = 'Имя должно состоять только с букв, пробелов или дефисов';
+const NO_SYMBOL_ERROR = 'Имя должно быть от 2 до 70 символов';
+const NO_ENTER_EMAIL = 'Введите Email';
+const NO_INVALID_EMAIL = 'Некорректный Email';
 
 function showError(err, $input) {
     const $el = $(`<div class="input-error">${err}</div>`);
@@ -37,11 +84,11 @@ function showError(err, $input) {
 function validateName(val) {
     let err = null;
     if (!val) {
-        err = 'Введите имя';
-    } else if(!/^[А-Яа-яіA-Za-z\s-]*$/.test(val)) {
-        err = 'Имя должно состоять только с букв, пробелов или дефисов';
-    } else if(val.length < 2 || val.length > 70) {
-        err = 'Имя должно быть от 2 до 70 символов';
+        err = NO_NAME_ERROR;
+    } else if (!/^[А-Яа-яіA-Za-z\s-]*$/.test(val)) {
+        err = NO_HYPHENS_ERROR;
+    } else if (val.length < 2 || val.length > 70) {
+        err = NO_SYMBOL_ERROR;
     }
     return err;
 }
@@ -50,16 +97,14 @@ function validateEmail(email) {
     let err = null;
     const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!email) {
-        err = 'Введите Email';
+        err = NO_ENTER_EMAIL;
     } else if (!re.test(email)) {
-        err = 'Некорректный Email';
+        err = NO_INVALID_EMAIL;
     }
     return err;
 }
 
-function showFields(name, email){
-    let text = '';
-    text += `Имя => ${name}\n`;
-    text += `Email => ${email}\n`;
+function showFields(fields) {
+    const text = fields.map(({title, value}) => `${title} => ${value}`).join('\n');
     alert(text);
 }
